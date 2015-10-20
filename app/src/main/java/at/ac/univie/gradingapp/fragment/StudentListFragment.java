@@ -1,8 +1,6 @@
 package at.ac.univie.gradingapp.fragment;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -13,10 +11,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import at.ac.univie.gardingapp.R;
-import at.ac.univie.gradingapp.model.SchoolClass;
+import at.ac.univie.gradingapp.model.Student;
 
 /**
  * A fragment representing a list of Items.
@@ -27,7 +24,9 @@ import at.ac.univie.gradingapp.model.SchoolClass;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class SchoolclasslistFragment extends Fragment implements AbsListView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+public class StudentListFragment extends Fragment implements AbsListView.OnItemClickListener, AdapterView.OnItemLongClickListener {
+
+
 
 
     private OnFragmentInteractionListener mListener;
@@ -44,8 +43,8 @@ public class SchoolclasslistFragment extends Fragment implements AbsListView.OnI
     private ListAdapter mAdapter;
 
     // TODO: Rename and change types of parameters
-    public static SchoolclasslistFragment newInstance() {
-        SchoolclasslistFragment fragment = new SchoolclasslistFragment();
+    public static StudentListFragment newInstance() {
+        StudentListFragment fragment = new StudentListFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -55,7 +54,7 @@ public class SchoolclasslistFragment extends Fragment implements AbsListView.OnI
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public SchoolclasslistFragment() {
+    public StudentListFragment() {
     }
 
     @Override
@@ -63,14 +62,14 @@ public class SchoolclasslistFragment extends Fragment implements AbsListView.OnI
         super.onCreate(savedInstanceState);
 
         // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<SchoolClass>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, SchoolClass.getAllSchoolClasses());
+        mAdapter = new ArrayAdapter<Student>(getActivity(),
+                android.R.layout.simple_list_item_1, android.R.id.text1, Student.getAllStudents());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_schoolclasslist, container, false);
+        View view = inflater.inflate(R.layout.fragment_item, container, false);
 
         // Set the adapter
         mListView = (AbsListView) view.findViewById(android.R.id.list);
@@ -79,19 +78,12 @@ public class SchoolclasslistFragment extends Fragment implements AbsListView.OnI
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
         mListView.setOnItemLongClickListener(this);
-
         return view;
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
     }
 
     @Override
@@ -102,11 +94,6 @@ public class SchoolclasslistFragment extends Fragment implements AbsListView.OnI
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        if (null != mListener) {
-            // Notify the active callbacks interface (the activity, if the
-            // fragment is attached to one) that an item has been selected.
-            //mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
-        }
     }
 
     /**
@@ -124,17 +111,13 @@ public class SchoolclasslistFragment extends Fragment implements AbsListView.OnI
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        SchoolClass schoolClassToDelete = (SchoolClass) parent.getItemAtPosition(position);
-
-        schoolClassToDelete.deleteAllStudents();
-        schoolClassToDelete.delete();
-        mAdapter = new ArrayAdapter<SchoolClass>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, SchoolClass.getAllSchoolClasses());
+        Student studentToDelete = (Student) parent.getItemAtPosition(position);
+        studentToDelete.delete();
+        mAdapter = new ArrayAdapter<Student>(getActivity(),
+                android.R.layout.simple_list_item_1, android.R.id.text1, Student.getAllStudents());
         mListView.setAdapter(mAdapter);
         return false;
     }
-    
-
     /**
      * This interface must be implemented by activities that contain this
      * fragment to allow an interaction in this fragment to be communicated

@@ -5,8 +5,10 @@ import android.util.Log;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Marvin on 18.10.2015.
@@ -60,6 +62,10 @@ public class Person extends Model{
     public void setBirthdate(Date birthdate) {
         Log.d(TAG, "setBirthdate: "+birthdate);
         this.birthdate = birthdate;
+    }
+
+    public static List<Student> getAllStudents() {
+        return new Select().from (Student.class).execute();
     }
 
     @Override //Override für die Headmaster "ID" von der Klasse, bei + wird immer toString aufgerufen, deshalb der Override

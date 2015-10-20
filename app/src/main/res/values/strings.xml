@@ -11,4 +11,6 @@
     <string name="schooclass">Schulklasse</string>
     <string name="classname">Klassenname</string>
     <string name="schoolclasslist">Klassenliste</string>
+    <string name="student">Student</string>
+    <string name="studentlist">Student</string>
 </resources>

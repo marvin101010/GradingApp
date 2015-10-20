@@ -18,6 +18,8 @@ import android.view.MenuItem;
 import at.ac.univie.gardingapp.R;
 import at.ac.univie.gradingapp.fragment.SchoolClassFragment;
 import at.ac.univie.gradingapp.fragment.SchoolclasslistFragment;
+import at.ac.univie.gradingapp.fragment.StudentClassFragment;
+import at.ac.univie.gradingapp.fragment.StudentListFragment;
 import at.ac.univie.gradingapp.model.SchoolClass;
 
 public class MainActivity extends AppCompatActivity
@@ -75,6 +77,14 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.nav_schoolclasslist) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, SchoolclasslistFragment.newInstance()).commit();
         }
+        else if (id == R.id.nav_student) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, StudentClassFragment.newInstance()).commit();
+        }
+        else if (id == R.id.nav_studentlist) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, StudentListFragment.newInstance()).commit();
+        }
+
+
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
