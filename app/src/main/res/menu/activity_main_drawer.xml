@@ -7,9 +7,9 @@
         <item android:id="@+id/nav_schoolclasslist" android:icon="@android:drawable/ic_dialog_info"
             android:title="@string/schoolclasslist" />
         <item android:id="@+id/nav_student" android:icon="@android:drawable/ic_dialog_info"
-            android:title="@string/student" />
+            android:title="@string/Student" />
         <item android:id="@+id/nav_studentlist" android:icon="@android:drawable/ic_dialog_info"
-            android:title="@string/studentlist" />
+            android:title="@string/Studentenliste" />
     </group>
 
 </menu>

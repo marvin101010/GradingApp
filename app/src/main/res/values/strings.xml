@@ -13,4 +13,6 @@
     <string name="schoolclasslist">Klassenliste</string>
     <string name="student">Student</string>
     <string name="studentlist">Student</string>
+    <string name="Student">Student</string>
+    <string name="Studentenliste">Studentenliste</string>
 </resources>
