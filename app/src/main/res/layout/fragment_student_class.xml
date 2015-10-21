@@ -49,6 +49,11 @@
             android:ems="10"
             android:id="@+id/studentBirthdateEdit" />
 
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/schooClassSpinner" />
+
         <Button
             android:layout_width="113dp"
             android:layout_height="wrap_content"

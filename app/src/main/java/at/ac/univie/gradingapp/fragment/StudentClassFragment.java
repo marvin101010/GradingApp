@@ -8,10 +8,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
+import android.widget.ListView;
+import android.widget.Spinner;
+
+import java.util.ArrayList;
 import java.util.List;
 import at.ac.univie.gardingapp.R;
+import at.ac.univie.gradingapp.model.SchoolClass;
 import at.ac.univie.gradingapp.model.Student;
 
 /**
@@ -29,7 +36,7 @@ public class StudentClassFragment extends Fragment {
     private View mRootView;
     private Student mStudent;
     private static final String TAG = "StudentClassFragment";
-
+    private SchoolClass mSchoolclass;
 
     private View.OnClickListener saveClickListener=new View.OnClickListener() {
         @Override
@@ -40,8 +47,10 @@ public class StudentClassFragment extends Fragment {
             }
             EditText firstName = (EditText) mRootView.findViewById(R.id.studentFirstnameEdit);
             EditText birthDate = (EditText) mRootView.findViewById(R.id.studentBirthdateEdit);
+            Spinner schoolClass = (Spinner) mRootView.findViewById(R.id.schooClassSpinner);
             mStudent.setLastname(lastName.getText().toString());
             mStudent.setFirstname(firstName.getText().toString());
+            mStudent.setSchoolClass((SchoolClass) schoolClass.getItemAtPosition(schoolClass.getSelectedItemPosition())); //(SchoolClass) in Klammer zum Casten - Damit java weiß was ich übergebe
             //mStudent.setBirthdate(birthDate.get
             mStudent.save();
             /*Student teststudent = new Student(
@@ -61,6 +70,7 @@ public class StudentClassFragment extends Fragment {
             }
         }
     };
+
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
@@ -78,6 +88,7 @@ public class StudentClassFragment extends Fragment {
     public StudentClassFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -97,6 +108,11 @@ public class StudentClassFragment extends Fragment {
         mRootView = view; //speichert die View ab
         Button studentClassSaveButton = (Button) view.findViewById(R.id.studentClassSaveButton);
         studentClassSaveButton.setOnClickListener(saveClickListener);
+        Spinner schoolClassSpinner = (Spinner) view.findViewById(R.id.schooClassSpinner); //Java sagen was er sich holen soll
+        ArrayAdapter<SchoolClass> mAdapter = new ArrayAdapter<SchoolClass>(getActivity(), // den Adapter definieren
+                android.R.layout.simple_list_item_1, android.R.id.text1, SchoolClass.getAllSchoolClasses());
+        schoolClassSpinner.setAdapter(mAdapter); //den Spinner mit Adapter füllen
+
     }
 
     // TODO: Rename method, update argument and hook method into UI event

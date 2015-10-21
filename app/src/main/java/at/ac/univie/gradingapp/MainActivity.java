@@ -95,4 +95,10 @@ public class MainActivity extends AppCompatActivity
     public void onFragmentInteraction(String id) {
 
     }
+
+    @Override
+    public void studentclicked(SchoolClass schoolClassPicker) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, StudentListFragment.newInstance(schoolClassPicker)).commit();
+
+    }
 }
