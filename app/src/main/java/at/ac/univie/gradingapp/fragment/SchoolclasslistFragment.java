@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import android.widget.Toast;
 
 import at.ac.univie.gardingapp.R;
 import at.ac.univie.gradingapp.model.SchoolClass;
+import at.ac.univie.gradingapp.model.Student;
 
 /**
  * A fragment representing a list of Items.
@@ -30,6 +32,7 @@ import at.ac.univie.gradingapp.model.SchoolClass;
 public class SchoolclasslistFragment extends Fragment implements AbsListView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
 
+    private static final String TAG = "SchoolclasslistFragment";
     private OnFragmentInteractionListener mListener;
 
     /**
@@ -102,11 +105,17 @@ public class SchoolclasslistFragment extends Fragment implements AbsListView.OnI
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        SchoolClass schoolClassPicker = (SchoolClass) parent.getItemAtPosition(position);
+        for (Student student:schoolClassPicker.getStudents()) {
+            Log.d(TAG, "Student: " + student);
+        }
         if (null != mListener) {
             // Notify the active callbacks interface (the activity, if the
             // fragment is attached to one) that an item has been selected.
             //mListener.onFragmentInteraction(DummyContent.ITEMS.get(position).id);
+        mListener.studentclicked(schoolClassPicker);
         }
+
     }
 
     /**
@@ -124,10 +133,10 @@ public class SchoolclasslistFragment extends Fragment implements AbsListView.OnI
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        SchoolClass schoolClassToDelete = (SchoolClass) parent.getItemAtPosition(position);
+        SchoolClass schoolClassPicker = (SchoolClass) parent.getItemAtPosition(position);
 
-        schoolClassToDelete.deleteAllStudents();
-        schoolClassToDelete.delete();
+        schoolClassPicker.deleteAllStudents();
+        schoolClassPicker.delete();
         mAdapter = new ArrayAdapter<SchoolClass>(getActivity(),
                 android.R.layout.simple_list_item_1, android.R.id.text1, SchoolClass.getAllSchoolClasses());
         mListView.setAdapter(mAdapter);
@@ -148,6 +157,8 @@ public class SchoolclasslistFragment extends Fragment implements AbsListView.OnI
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         public void onFragmentInteraction(String id);
+
+        void studentclicked(SchoolClass schoolClassToDelete);
     }
 
 }

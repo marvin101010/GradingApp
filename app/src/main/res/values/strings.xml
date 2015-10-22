@@ -1,12 +1,8 @@
 <resources>
     <string name="app_name">GradingApp</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="action_settings">Settings</string>
-
-<!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="schooclass">Schulklasse</string>
     <string name="classname">Klassenname</string>
@@ -15,4 +11,5 @@
     <string name="studentlist">Student</string>
     <string name="Student">Student</string>
     <string name="Studentenliste">Studentenliste</string>
+    <string name="notenliste">Notenliste</string>
 </resources>

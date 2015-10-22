@@ -21,6 +21,10 @@ public class Student extends Person {
     public Student() {
         super();
     }
+
+    public void setSchoolClass(SchoolClass schoolClass) {
+        this.schoolClass = schoolClass;
+    }
 }
 
 

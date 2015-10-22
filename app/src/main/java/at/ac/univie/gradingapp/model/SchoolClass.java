@@ -8,6 +8,7 @@ import com.activeandroid.annotation.Table;
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +16,7 @@ import java.util.List;
  * Created by Marvin on 18.10.2015.
  */
 @Table(name = "SchoolClass")
-public class SchoolClass extends Model{ //extends Model --> Hier erbt die Klasse die möglichen Aktionen fürs SQL vom activeandroid
+public class SchoolClass extends Model implements Serializable{ //extends Model --> Hier erbt die Klasse die möglichen Aktionen fürs SQL vom activeandroid // Serializable zum in Aktivities hin und her schieben
     private static final String TAG="SchoolClass"; //Fürs Logging - dann hat man den Tag drinnen
     @Column(name = "classname")
     private String classname;
@@ -67,11 +68,10 @@ public class SchoolClass extends Model{ //extends Model --> Hier erbt die Klasse
         return classname;
     }
 
-    public void deleteAllStudents(){
+    public void deleteAllStudents() {
         //new Delete().from(Student.class).where("SchoolClass="+this.getId());
-        for (Student student:this.getStudents()) {
-               student.delete();
+        for (Student student : this.getStudents()) {
+            student.delete();
         }
     }
-
 }

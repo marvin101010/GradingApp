@@ -13,6 +13,7 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import at.ac.univie.gardingapp.R;
+import at.ac.univie.gradingapp.model.SchoolClass;
 import at.ac.univie.gradingapp.model.Student;
 
 /**
@@ -26,10 +27,12 @@ import at.ac.univie.gradingapp.model.Student;
  */
 public class StudentListFragment extends Fragment implements AbsListView.OnItemClickListener, AdapterView.OnItemLongClickListener {
 
-
-
-
+    private static String schoolClassKey = "ClassKey";
     private OnFragmentInteractionListener mListener;
+    // TODO: Rename parameter arguments, choose names that match
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
+    // TODO: Rename and change types of parameters
 
     /**
      * The fragment's ListView/GridView.
@@ -41,6 +44,7 @@ public class StudentListFragment extends Fragment implements AbsListView.OnItemC
      * Views.
      */
     private ListAdapter mAdapter;
+    private SchoolClass mSchoolClass;
 
     // TODO: Rename and change types of parameters
     public static StudentListFragment newInstance() {
@@ -50,21 +54,31 @@ public class StudentListFragment extends Fragment implements AbsListView.OnItemC
         return fragment;
     }
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public StudentListFragment() {
+    public static StudentListFragment newInstance(SchoolClass schoolClassPicker) {
+        StudentListFragment fragment = new StudentListFragment();
+        Bundle args = new Bundle();
+        args.putSerializable(schoolClassKey, schoolClassPicker); //schoolClassKey = Name Bundle
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mSchoolClass = (SchoolClass) getArguments().getSerializable(schoolClassKey); //Casten!
+        }
 
-        // TODO: Change Adapter to display your content
-        mAdapter = new ArrayAdapter<Student>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, Student.getAllStudents());
+        if (mSchoolClass != null) {
+            mAdapter = new ArrayAdapter<Student>(getActivity(),
+                    android.R.layout.simple_list_item_1, android.R.id.text1, mSchoolClass.getStudents());
+        } else {
+            mAdapter = new ArrayAdapter<Student>(getActivity(),
+                    android.R.layout.simple_list_item_1, android.R.id.text1, Student.getAllStudents());
+        }
     }
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -80,6 +94,11 @@ public class StudentListFragment extends Fragment implements AbsListView.OnItemC
         mListView.setOnItemLongClickListener(this);
         return view;
     }
+    /**
+     * Mandatory empty constructor for the fragment manager to instantiate the
+     * fragment (e.g. upon screen orientation changes).
+     */
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -111,10 +130,16 @@ public class StudentListFragment extends Fragment implements AbsListView.OnItemC
 
     @Override
     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-        Student studentToDelete = (Student) parent.getItemAtPosition(position);
-        studentToDelete.delete();
-        mAdapter = new ArrayAdapter<Student>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, Student.getAllStudents());
+        Student studentPicker = (Student) parent.getItemAtPosition(position);
+        studentPicker.delete();
+        if (mSchoolClass != null) {
+            mAdapter = new ArrayAdapter<Student>(getActivity(),
+                    android.R.layout.simple_list_item_1, android.R.id.text1, mSchoolClass.getStudents());
+        } else {
+            mAdapter = new ArrayAdapter<Student>(getActivity(),
+                    android.R.layout.simple_list_item_1, android.R.id.text1, Student.getAllStudents());
+        }
+
         mListView.setAdapter(mAdapter);
         return false;
     }
