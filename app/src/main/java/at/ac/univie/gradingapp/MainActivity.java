@@ -25,6 +25,7 @@ import at.ac.univie.gradingapp.model.SchoolClass;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,SchoolclasslistFragment.OnFragmentInteractionListener { //Drawer und Schoolclasslist als Starscreen
 //1
+    ///2
     private static final String TAG = "main activity";
 
     @Override
