@@ -68,8 +68,7 @@ public class SchoolClass extends Model implements Serializable{ //extends Model 
         return classname;
     }
 
-    public void deleteAllStudents() {
-        //new Delete().from(Student.class).where("SchoolClass="+this.getId());
+    public void deleteAllStudents() { //Wird eine SchoolClass deleted werden auch alle Students deleted
         for (Student student : this.getStudents()) {
             student.delete();
         }

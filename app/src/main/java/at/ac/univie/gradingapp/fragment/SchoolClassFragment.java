@@ -34,9 +34,9 @@ public class SchoolClassFragment extends Fragment {
     private SchoolClass mSchoolClass;
     private View mRootView;
 
-    private View.OnClickListener saveClickListener=new View.OnClickListener() {
+    private View.OnClickListener saveClickListener=new View.OnClickListener() { // Listener "hören" drauf wenn etwas in dem Fragment passiert. Dieser Listener heißt saveClickListener
         @Override
-        public void onClick(View v) {
+        public void onClick(View v) { //Der "saveClickListener" reagiert "onClick"
             EditText className = (EditText) mRootView.findViewById(R.id.classNameEditText);  //(EditText) --> man "casted" die view, damit wir bescheid wissen was gecasted wird gibt man die Art an (EditText)
             if (mSchoolClass == null) {
                 mSchoolClass = new SchoolClass(); //Erstellt neue Klasse wenn ich auf speichern klicke
@@ -61,13 +61,6 @@ public class SchoolClassFragment extends Fragment {
         }
     };
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment SchoolClassFragment.
-     */
-    // TODO: Rename and change types and number of parameters
     public static SchoolClassFragment newInstance() {
         SchoolClassFragment fragment = new SchoolClassFragment();
         Bundle args = new Bundle();

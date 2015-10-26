@@ -1,6 +1,10 @@
 package at.ac.univie.gradingapp.fragment;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,12 +14,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import at.ac.univie.gardingapp.R;
 import at.ac.univie.gradingapp.model.SchoolClass;
@@ -37,6 +44,9 @@ public class StudentClassFragment extends Fragment {
     private Student mStudent;
     private static final String TAG = "StudentClassFragment";
     private SchoolClass mSchoolclass;
+    Button btn;
+    int year_x, month_x, day_x;
+    static final int DIALOG_ID = 0;
 
     private View.OnClickListener saveClickListener=new View.OnClickListener() {
         @Override
@@ -46,12 +56,11 @@ public class StudentClassFragment extends Fragment {
                 mStudent = new Student(); //Erstellt neuen Student wenn ich auf speichern klicke
             }
             EditText firstName = (EditText) mRootView.findViewById(R.id.studentFirstnameEdit);
-            EditText birthDate = (EditText) mRootView.findViewById(R.id.studentBirthdateEdit);
             Spinner schoolClass = (Spinner) mRootView.findViewById(R.id.schooClassSpinner);
+
             mStudent.setLastname(lastName.getText().toString());
             mStudent.setFirstname(firstName.getText().toString());
             mStudent.setSchoolClass((SchoolClass) schoolClass.getItemAtPosition(schoolClass.getSelectedItemPosition())); //(SchoolClass) in Klammer zum Casten - Damit java weiß was ich übergebe
-            //mStudent.setBirthdate(birthDate.get
             mStudent.save();
             /*Student teststudent = new Student(
                     "Foo","bar",new Date(),mSchoolClass
@@ -70,6 +79,7 @@ public class StudentClassFragment extends Fragment {
             }
         }
     };
+
 
     /**
      * Use this factory method to create a new instance of
@@ -121,7 +131,6 @@ public class StudentClassFragment extends Fragment {
             mListener.onFragmentInteraction(uri);
         }
     }
-
 
     @Override
     public void onDetach() {

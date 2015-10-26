@@ -23,12 +23,12 @@ import at.ac.univie.gradingapp.fragment.StudentListFragment;
 import at.ac.univie.gradingapp.model.SchoolClass;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,SchoolclasslistFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener,SchoolclasslistFragment.OnFragmentInteractionListener { //Drawer und Schoolclasslist als Starscreen
 
     private static final String TAG = "main activity";
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) { //Was passiert wenn die MainActivity aufgerufen wird
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);

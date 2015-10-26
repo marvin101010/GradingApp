@@ -13,4 +13,5 @@
     <string name="Studentenliste">Studentenliste</string>
     <string name="notenliste">Notenliste</string>
     <string name="Studentsenliste">Studentenliste</string>
+    <string name="pick_date">Geburtsdatum Wählen</string>
 </resources>
