@@ -1,5 +1,6 @@
 package at.ac.univie.gradingapp;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -20,10 +21,13 @@ import at.ac.univie.gradingapp.fragment.SchoolClassFragment;
 import at.ac.univie.gradingapp.fragment.SchoolclasslistFragment;
 import at.ac.univie.gradingapp.fragment.StudentClassFragment;
 import at.ac.univie.gradingapp.fragment.StudentListFragment;
+import at.ac.univie.gradingapp.fragment.SubjectListFragment;
+import at.ac.univie.gradingapp.model.Headmaster;
 import at.ac.univie.gradingapp.model.SchoolClass;
+import at.ac.univie.gradingapp.model.Subject;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,SchoolclasslistFragment.OnFragmentInteractionListener { //Drawer und Schoolclasslist als Starscreen
+        implements NavigationView.OnNavigationItemSelectedListener,SchoolclasslistFragment.OnFragmentInteractionListener, SubjectListFragment.OnFragmentInteractionListener { //Drawer und Schoolclasslist als Starscreen
 //1
     ///2
     private static final String TAG = "main activity";
@@ -31,6 +35,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) { //Was passiert wenn die MainActivity aufgerufen wird
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -77,6 +82,10 @@ public class MainActivity extends AppCompatActivity
         else if (id == R.id.nav_studentlist) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, StudentListFragment.newInstance()).commit();
         }
+//        else if (id == R.id.nav_subjectlist) {
+//            // Fächerliste anzeigen
+//            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, SubjectListFragment.newInstance()).commit();
+//        }
 
 
 
@@ -86,8 +95,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onFragmentInteraction(String id) {
+    public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void subjectClicked(Subject selectedSubject) {
+        // TODO: check if getSchoolClass is working
+        Log.d("MainActivity", "selected class: " + selectedSubject.getSchoolClass().getClassname());
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, StudentListFragment.newInstance(selectedSubject.getSchoolClass())).commit();
     }
 
     @Override
@@ -95,4 +111,11 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, StudentListFragment.newInstance(schoolClassPicker)).commit();
 
     }
+
+    @Override
+    public void schoolClassClicked(SchoolClass selectedSchoolClass) {
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, SubjectListFragment.newInstance(selectedSchoolClass)).commit();
+
+    }
+
 }
