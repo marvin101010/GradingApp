@@ -37,6 +37,20 @@ public class SchoolClass extends Model implements Serializable{ //extends Model 
         return getMany(Student.class, "schoolClass");
     }
 
+    public List<Subject> getSubjects() { return getMany(Subject.class, "schoolClass"); }
+//TODO: DELETE THIS CODE
+//    public List<Subject> getSubjects() {
+//
+//        return new Select()
+//                .from(Subject.class)
+//                .innerJoin(SchoolClass.class).on("Subject.schoolClass = SchoolClass.classname")
+//                .where("Subject.schoolClass = ?", classname)
+//                .execute();
+//    };
+//return getMany(Subject.class, "schoolClass"); }
+
+
+
     public String getClassname() {
         return classname;
     }
@@ -71,6 +85,11 @@ public class SchoolClass extends Model implements Serializable{ //extends Model 
     public void deleteAllStudents() { //Wird eine SchoolClass deleted werden auch alle Students deleted
         for (Student student : this.getStudents()) {
             student.delete();
+        }
+
+        // Wird eine SchoolClass deleted, werden auch die Subjects entfernt
+        for (Subject subject : this.getSubjects()) {
+            subject.delete();
         }
     }
 }
