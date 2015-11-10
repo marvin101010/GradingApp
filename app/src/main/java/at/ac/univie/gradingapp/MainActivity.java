@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_placeholder, SchoolclasslistFragment.newInstance()).commit();//immer Support nutzen, damit man die älteren Versionen unterstützt, Aktivity ist durch Fragments immer gleich
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_placeholder, SchoolclasslistFragment.newInstance()).addToBackStack("").commit();//immer Support nutzen, damit man die älteren Versionen unterstützt, Aktivity ist durch Fragments immer gleich
     }
 
     @Override
@@ -70,17 +70,17 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_schoolclass) {
             Log.d(TAG,"irgendwas");
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder,SchoolClassFragment.newInstance()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, SchoolClassFragment.newInstance()).addToBackStack("").commit();
             // Neue Klasse anlegen
         }
         else if (id == R.id.nav_schoolclasslist) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, SchoolclasslistFragment.newInstance()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, SchoolclasslistFragment.newInstance()).addToBackStack("").commit();
         }
         else if (id == R.id.nav_student) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, StudentClassFragment.newInstance()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, StudentClassFragment.newInstance()).addToBackStack("").commit();
         }
         else if (id == R.id.nav_studentlist) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, StudentListFragment.newInstance()).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, StudentListFragment.newInstance()).addToBackStack("").commit();
         }
 //        else if (id == R.id.nav_subjectlist) {
 //            // Fächerliste anzeigen
@@ -103,18 +103,18 @@ public class MainActivity extends AppCompatActivity
     public void subjectClicked(Subject selectedSubject) {
         // TODO: check if getSchoolClass is working
         Log.d("MainActivity", "selected class: " + selectedSubject.getSchoolClass().getClassname());
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, StudentListFragment.newInstance(selectedSubject.getSchoolClass())).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, StudentListFragment.newInstance(selectedSubject.getSchoolClass())).addToBackStack("").commit();
     }
 
     @Override
     public void studentclicked(SchoolClass schoolClassPicker) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, StudentListFragment.newInstance(schoolClassPicker)).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, StudentListFragment.newInstance(schoolClassPicker)).addToBackStack("").commit();
 
     }
 
     @Override
     public void schoolClassClicked(SchoolClass selectedSchoolClass) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, SubjectListFragment.newInstance(selectedSchoolClass)).commit();
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, SubjectListFragment.newInstance(selectedSchoolClass)).addToBackStack("").commit();
 
     }
 
