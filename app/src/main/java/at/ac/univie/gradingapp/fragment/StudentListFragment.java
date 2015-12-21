@@ -5,14 +5,20 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListAdapter;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.List;
 
 import at.ac.univie.gardingapp.R;
 import at.ac.univie.gradingapp.model.SchoolClass;
@@ -47,6 +53,9 @@ public class StudentListFragment extends Fragment implements AbsListView.OnItemC
      */
     private ListAdapter mAdapter;
     private SchoolClass mSchoolClass;
+    private Button mBulkAddButton;
+    private Button mWeightButton;
+
 
     // TODO: Rename and change types of parameters
     public static StudentListFragment newInstance() {
@@ -94,6 +103,13 @@ public class StudentListFragment extends Fragment implements AbsListView.OnItemC
         // Set OnItemClickListener so we can be notified on item clicks
         mListView.setOnItemClickListener(this);
         mListView.setOnItemLongClickListener(this);
+
+        mBulkAddButton = (Button) view.findViewById(R.id.bulkAddButton);
+        mBulkAddButton.setOnClickListener(bulkAddButtonClickListener);
+
+        mWeightButton = (Button) view.findViewById(R.id.weightButton);
+        mWeightButton.setOnClickListener(weightButtonClickListener);
+
         return view;
     }
     /**
@@ -191,6 +207,25 @@ public class StudentListFragment extends Fragment implements AbsListView.OnItemC
         // TODO: Update argument type and name
         public void onAddNewGradeClicked(Student selectedStudent);
         public void onViewGradesClicked(Student selectedStudent);
+        public void onBulkAddClicked(SchoolClass selectedSchoolClass);
+        public void onWeightClicked(SchoolClass selectedSchoolClass);
     }
 
+    private View.OnClickListener bulkAddButtonClickListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if(mListener != null && mSchoolClass != null) {
+                mListener.onBulkAddClicked(mSchoolClass);
+            }
+        }
+    };
+
+    private View.OnClickListener weightButtonClickListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            if(mListener != null && mSchoolClass != null) {
+                mListener.onWeightClicked(mSchoolClass);
+            }
+        }
+    };
 }

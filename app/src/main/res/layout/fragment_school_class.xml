@@ -22,7 +22,7 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Klasse"
                 android:id="@+id/textView2"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center|left" />
 
             <EditText
                 android:layout_width="match_parent"
