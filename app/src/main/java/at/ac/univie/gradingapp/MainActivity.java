@@ -24,12 +24,11 @@ import at.ac.univie.gradingapp.fragment.StudentListFragment;
 import at.ac.univie.gradingapp.fragment.SubjectListFragment;
 import at.ac.univie.gradingapp.model.Headmaster;
 import at.ac.univie.gradingapp.model.SchoolClass;
-import at.ac.univie.gradingapp.model.Student;
 import at.ac.univie.gradingapp.model.Subject;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,SchoolclasslistFragment.OnFragmentInteractionListener, SubjectListFragment.OnFragmentInteractionListener, StudentListFragment.OnFragmentInteractionListener { //Drawer und Schoolclasslist als Starscreen
-    //1
+        implements NavigationView.OnNavigationItemSelectedListener,SchoolclasslistFragment.OnFragmentInteractionListener, SubjectListFragment.OnFragmentInteractionListener { //Drawer und Schoolclasslist als Starscreen
+//1
     ///2
     private static final String TAG = "main activity";
 
@@ -70,20 +69,24 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_schoolclass) {
-            Log.d(TAG, "irgendwas");
+            Log.d(TAG,"irgendwas");
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, SchoolClassFragment.newInstance()).addToBackStack("").commit();
             // Neue Klasse anlegen
-        } else if (id == R.id.nav_schoolclasslist) {
+        }
+        else if (id == R.id.nav_schoolclasslist) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, SchoolclasslistFragment.newInstance()).addToBackStack("").commit();
-        } else if (id == R.id.nav_student) {
+        }
+        else if (id == R.id.nav_student) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, StudentClassFragment.newInstance()).addToBackStack("").commit();
-        } else if (id == R.id.nav_studentlist) {
+        }
+        else if (id == R.id.nav_studentlist) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, StudentListFragment.newInstance()).addToBackStack("").commit();
         }
 //        else if (id == R.id.nav_subjectlist) {
 //            // Fächerliste anzeigen
 //            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, SubjectListFragment.newInstance()).commit();
 //        }
+
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -115,20 +118,4 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    @Override
-    public void onAddNewGradeClicked(Student selectedStudent) {
-        Log.d("MainActivity/NewGrade", "selected student: " + selectedStudent.getLastname());
-        // TODO: ELISABETH: Fragment für "Noten anzeigen" öffnen!!
-        // DES GEHT AN MARVIN AN SCHEISSDRECK AUN! IS NUR FIA DIE ELISABETH BESTIMMT!
-        // FINGER WEG!
-    }
-
-    @Override
-    public void onViewGradesClicked(Student selectedStudent) {
-        Log.d("MainActivity/ViewGrade", "selected student: " + selectedStudent.getLastname());
-        // TODO: ELISABETH: Fragment für "Noten eingeben" öffnen!!
-        // DES GEHT AN MARVIN AN SCHEISSDRECK AUN! IS NUR FIA DIE ELISABETH BESTIMMT!
-        // FINGER WEG!
-    }
 }
-

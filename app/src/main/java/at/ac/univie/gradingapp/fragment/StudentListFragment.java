@@ -1,8 +1,6 @@
 package at.ac.univie.gradingapp.fragment;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -105,14 +103,6 @@ public class StudentListFragment extends Fragment implements AbsListView.OnItemC
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-
     }
 
     @Override
@@ -123,30 +113,6 @@ public class StudentListFragment extends Fragment implements AbsListView.OnItemC
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-        //Open Popup for adding or showing grades
-
-        final Student student = (Student)parent.getAdapter().getItem(position);
-        if(student != null) {
-            String selected = student.toString();
-
-            if(selected !=  null) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setMessage("Aktionen für " + selected)
-                        .setCancelable(true)
-                        .setPositiveButton("Note anzeigen", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                mListener.onViewGradesClicked(student);
-                            }
-                        })
-                        .setNegativeButton("Note eingeben", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                mListener.onAddNewGradeClicked(student);
-                            }
-                        });
-                builder.show();
-            }
-        }
     }
 
     /**
@@ -189,8 +155,7 @@ public class StudentListFragment extends Fragment implements AbsListView.OnItemC
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onAddNewGradeClicked(Student selectedStudent);
-        public void onViewGradesClicked(Student selectedStudent);
+        public void onFragmentInteraction(String id);
     }
 
 }
