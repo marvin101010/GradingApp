@@ -130,5 +130,23 @@ public class MainActivity extends AppCompatActivity
         // DES GEHT AN MARVIN AN SCHEISSDRECK AUN! IS NUR FIA DIE ELISABETH BESTIMMT!
         // FINGER WEG!
     }
+
+    @Override
+    public void onWeightClicked(SchoolClass selectedSchoolClass) {
+        Log.d("MainActivity/weight", "selected class: " + selectedSchoolClass.getClassname());
+        // TODO: ELISABETH: Fragment für Gewichtung öffnen!!
+        // DES GEHT EICH AN SCHEISSDRECK AUN!
+        // FINGER WEG!
+    }
+
+    @Override
+    public void onBulkAddClicked(SchoolClass selectedSchoolClass) {
+        Log.d("MainActivity/BulkAdd", "selected class: " + selectedSchoolClass.getClassname());
+        // TODO: THOMAS: Fragment für BulkAdd öffnen!!
+        // DES GEHT EICH AN SCHEISSDRECK AUN!
+        // FINGER WEG!
+    }
+
+
 }
 

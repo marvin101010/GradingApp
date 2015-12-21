@@ -4,10 +4,8 @@
     android:layout_height="match_parent"
     tools:context="at.ac.univie.gradingapp.fragment.SchoolclasslistFragment">
 
-    <ListView android:id="@android:id/list" android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
-    <TextView android:id="@android:id/empty" android:layout_width="match_parent"
-        android:layout_height="match_parent" android:gravity="center" />
+    <ListView android:id="@android:id/list" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|bottom|left|right|top" />
 
 </FrameLayout>
