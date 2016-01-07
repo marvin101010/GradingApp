@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import at.ac.univie.gardingapp.R;
+import at.ac.univie.gradingapp.fragment.ImporterFragment;
 import at.ac.univie.gradingapp.fragment.SchoolClassFragment;
 import at.ac.univie.gradingapp.fragment.SchoolclasslistFragment;
 import at.ac.univie.gradingapp.fragment.StudentClassFragment;
@@ -79,6 +80,8 @@ public class MainActivity extends AppCompatActivity
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, StudentClassFragment.newInstance()).addToBackStack("").commit();
         } else if (id == R.id.nav_studentlist) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, StudentListFragment.newInstance()).addToBackStack("").commit();
+        } else if (id == R.id.nav_importer) {
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, ImporterFragment.newInstance()).addToBackStack("").commit();
         }
 //        else if (id == R.id.nav_subjectlist) {
 //            // Fächerliste anzeigen
