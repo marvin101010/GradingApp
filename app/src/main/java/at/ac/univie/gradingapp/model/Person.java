@@ -21,9 +21,9 @@ public class Person extends Model{
     @Column(name = "firstname")
     private String firstname;
     @Column(name = "birthdate")
-    private Date birthdate;
+    private String birthdate;
 
-    public Person(String lastname, String firstname, Date birthdate) {
+    public Person(String lastname, String firstname, String birthdate) {
         super();
         this.lastname = lastname;
         this.firstname = firstname;
@@ -54,12 +54,12 @@ public class Person extends Model{
         this.firstname = firstname;
     }
 
-    public Date getBirthdate() {
+    public String getBirthdate() {
         Log.d(TAG, "getBirthdate: ");
         return birthdate;
     }
 
-    public void setBirthdate(Date birthdate) {
+    public void setBirthdate(String birthdate) {
         Log.d(TAG, "setBirthdate: "+birthdate);
         this.birthdate = birthdate;
     }

@@ -1,9 +1,12 @@
 package at.ac.univie.gradingapp.fragment;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,8 +22,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Scanner;
 
 import at.ac.univie.gardingapp.R;
 import at.ac.univie.gradingapp.MainActivity;
@@ -46,47 +51,10 @@ public class ImporterFragment extends Fragment {
     Button btn;
     int year_x, month_x, day_x;
     static final int DIALOG_ID = 0;
-
-    private View.OnClickListener saveClickListener=new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            EditText lastName = (EditText) mRootView.findViewById(R.id.studentLastnameEdit);  //(EditText) --> man "casted" die view, damit wir bescheid wissen was gecasted wird gibt man die Art an (EditText)
-            if (mStudent == null) {
-                mStudent = new Student(); //Erstellt neuen Student wenn ich auf speichern klicke
-            }
-            EditText firstName = (EditText) mRootView.findViewById(R.id.studentFirstnameEdit);
-            Spinner schoolClass = (Spinner) mRootView.findViewById(R.id.schooClassSpinner);
-
-            mStudent.setLastname(lastName.getText().toString());
-            mStudent.setFirstname(firstName.getText().toString());
-            mStudent.setSchoolClass((SchoolClass) schoolClass.getItemAtPosition(schoolClass.getSelectedItemPosition())); //(SchoolClass) in Klammer zum Casten - Damit java weiß was ich übergebe
-            mStudent.save();
-            /*Student teststudent = new Student(
-                    "Foo","bar",new Date(),mSchoolClass
-            );
-            teststudent.save();
-            */
-            /*
-            Debugg fürs Speichern der Schule
-             */
-            List<Student> bla = Student.getAllStudents();
-            for (Student Student:bla){
-                Log.d(TAG, Student.getLastname());
-                // for (Student student:schoolClass.getStudents()) {
-                //   Log.d(TAG,"Student: " + student);
-                // }
-            }
-        }
-    };
+    String firstName, lastName, birthDate;
 
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @return A new instance of fragment StudentClassFragment.
-     */
-    // TODO: Rename and change types and number of parameters
+
     public static ImporterFragment newInstance() {
         ImporterFragment fragment = new ImporterFragment();
         Bundle args = new Bundle();
@@ -119,16 +87,17 @@ public class ImporterFragment extends Fragment {
         String state = Environment.getExternalStorageState();
 
 
+//Schulklasse Auswählen mit einem Spinner
 
+        Spinner schoolClassSpinner = (Spinner) view.findViewById(R.id.schooClassSpinner); //Java sagen was er sich holen soll
+        ArrayAdapter<SchoolClass> mAdapter = new ArrayAdapter<SchoolClass>(getActivity(), // den Adapter definieren
+                android.R.layout.simple_list_item_1, android.R.id.text1, SchoolClass.getAllSchoolClasses());
+        schoolClassSpinner.setAdapter(mAdapter); //den Spinner mit Adapter füllen
 
+//File Einlesen
 
-        if (!(state.equals(Environment.MEDIA_MOUNTED))) {
-            Toast.makeText(getActivity(), "no sd card", Toast.LENGTH_SHORT).show();
-
-        } else {
             BufferedReader reader = null;
             try {
-                Toast.makeText(getActivity(), "Sd card available", Toast.LENGTH_LONG).show();
                 File file = Environment.getExternalStorageDirectory();
                 File textFile = new File(file.getAbsolutePath()+File.separator + "file.txt");
                 reader = new BufferedReader(new FileReader(textFile));
@@ -137,8 +106,8 @@ public class ImporterFragment extends Fragment {
                 while((line = reader.readLine()) != null) {
                     textBuilder.append(line);
                     textBuilder.append("\n");
-
                 }
+
                 tv.setText(textBuilder);
 
             } catch (FileNotFoundException e) {
@@ -161,18 +130,43 @@ public class ImporterFragment extends Fragment {
 
         }
 
-
-
-        /*Button studentClassSaveButton = (Button) view.findViewById(R.id.studentClassSaveButton);
-        studentClassSaveButton.setOnClickListener(saveClickListener);
-        Spinner schoolClassSpinner = (Spinner) view.findViewById(R.id.schooClassSpinner); //Java sagen was er sich holen soll
-        ArrayAdapter<SchoolClass> mAdapter = new ArrayAdapter<SchoolClass>(getActivity(), // den Adapter definieren
-                android.R.layout.simple_list_item_1, android.R.id.text1, SchoolClass.getAllSchoolClasses());
-        schoolClassSpinner.setAdapter(mAdapter); //den Spinner mit Adapter füllen */
-
-    }
-
     // TODO: Rename method, update argument and hook method into UI event
+
+    private View.OnClickListener saveClickListener=new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            Spinner schoolClass = (Spinner) mRootView.findViewById(R.id.schooClassSpinner);
+            if (mStudent == null) {
+                mStudent = new Student(); //Erstellt neuen Student wenn ich auf speichern klicke
+            }
+            BufferedReader reader = null;
+            try {
+                File file = Environment.getExternalStorageDirectory();
+                File textFile = new File(file.getAbsolutePath()+File.separator + "file.txt");
+                Scanner read = new Scanner(new FileReader(textFile));
+                read.useDelimiter("");
+                StringBuilder textBuilder = new StringBuilder();
+                while(read.hasNext()) {
+                    firstName = read.nextLine();
+                    lastName = read.nextLine();
+                    birthDate = read.nextLine();
+                    mStudent.setLastname(lastName.toString());
+                    mStudent.setFirstname(firstName.toString());
+                    mStudent.setBirthdate(birthDate.toString());
+                }
+
+            } catch (FileNotFoundException e) {
+                // TODO: handle exception
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            mStudent.setSchoolClass((SchoolClass) schoolClass.getItemAtPosition(schoolClass.getSelectedItemPosition())); //(SchoolClass) in Klammer zum Casten - Damit java weiß was ich übergebe
+            mStudent.save();
+
+        }
+    };
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
