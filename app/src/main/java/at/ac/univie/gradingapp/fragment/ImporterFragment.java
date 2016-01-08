@@ -138,35 +138,33 @@ public class ImporterFragment extends Fragment {
         public void onClick(View v) {
             Spinner schoolClass = (Spinner) mRootView.findViewById(R.id.schooClassSpinner);
             Log.d(TAG, "onClick");
-            /*if (mStudent == null) {
-                mStudent = new Student(); //Erstellt neuen Student wenn ich auf speichern klicke
-            } */
             //BufferedReader reader = null;
             try { //Try Block zum Einlesen der File und Lesen der File
                 File file = Environment.getExternalStorageDirectory();
                 File textFile = new File(file.getAbsolutePath()+File.separator + "file.txt");
                 Scanner read = new Scanner(new FileReader(textFile));
-                read.useDelimiter("\\s");
                 Log.d(TAG, "onClick2");
 
-                //StringBuilder textBuilder = new StringBuilder();
-                while(read.hasNext()) {
+                while (read.hasNextLine()) {
+                    read.useDelimiter("\\t");
                     mStudent = new Student();
-                    Log.d(TAG, "reader1");
+                    Log.d(TAG, "line");
 
-                    firstName = read.next();
-                    lastName = read.next();
-                    birthDate = read.next();
-                    mStudent.setLastname(lastName.toString());
-                    mStudent.setFirstname(firstName.toString());
-                    mStudent.setBirthdate(birthDate.toString());
-                    Log.d(TAG, "reader" + firstName);
-                    Log.d(TAG, "reader" + lastName);
-                    Log.d(TAG, "reader" + birthDate);
+                        firstName = read.next();
+                        Log.d(TAG, "reader First Name " + firstName);
+                        lastName = read.next();
+                        Log.d(TAG, "reader Last Name " + lastName);
+                        birthDate = read.nextLine();
+                        Log.d(TAG, "reader Birth Date " + birthDate);
+
+                        mStudent.setLastname(lastName.toString());
+                        mStudent.setFirstname(firstName.toString());
+                        mStudent.setBirthdate(birthDate.toString());
+                        mStudent.setSchoolClass((SchoolClass) schoolClass.getItemAtPosition(schoolClass.getSelectedItemPosition())); //(SchoolClass) in Klammer zum Casten - Damit java weiß was ich übergebe
+                    Log.d(TAG, "vormsave");
+
                     mStudent.save();
-                    mStudent.setSchoolClass((SchoolClass) schoolClass.getItemAtPosition(schoolClass.getSelectedItemPosition())); //(SchoolClass) in Klammer zum Casten - Damit java weiß was ich übergebe
                 }
-
             } catch (FileNotFoundException e) {
                 // TODO: handle exception
                 e.printStackTrace();
