@@ -46,7 +46,7 @@ public class ImporterFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private View mRootView;
     private Student mStudent;
-    private static final String TAG = "StudentClassFragment";
+    private static final String TAG = "ImporterFragment";
     private SchoolClass mSchoolclass;
     Button btn;
     int year_x, month_x, day_x;
@@ -83,9 +83,10 @@ public class ImporterFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mRootView = view; //speichert die View ab
+        Button classNameButton = (Button) view.findViewById(R.id.importerSaveButton);
+        classNameButton.setOnClickListener(importerClickListener);
         TextView tv = (TextView) view.findViewById(R.id.text_view);
         String state = Environment.getExternalStorageState();
-
 
 //Schulklasse Auswählen mit einem Spinner
 
@@ -94,7 +95,7 @@ public class ImporterFragment extends Fragment {
                 android.R.layout.simple_list_item_1, android.R.id.text1, SchoolClass.getAllSchoolClasses());
         schoolClassSpinner.setAdapter(mAdapter); //den Spinner mit Adapter füllen
 
-//File Einlesen
+//Aktuelles File anzeigen
 
             BufferedReader reader = null;
             try {
@@ -132,27 +133,38 @@ public class ImporterFragment extends Fragment {
 
     // TODO: Rename method, update argument and hook method into UI event
 
-    private View.OnClickListener saveClickListener=new View.OnClickListener() {
+    private View.OnClickListener importerClickListener=new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             Spinner schoolClass = (Spinner) mRootView.findViewById(R.id.schooClassSpinner);
-            if (mStudent == null) {
+            Log.d(TAG, "onClick");
+            /*if (mStudent == null) {
                 mStudent = new Student(); //Erstellt neuen Student wenn ich auf speichern klicke
-            }
-            BufferedReader reader = null;
-            try {
+            } */
+            //BufferedReader reader = null;
+            try { //Try Block zum Einlesen der File und Lesen der File
                 File file = Environment.getExternalStorageDirectory();
                 File textFile = new File(file.getAbsolutePath()+File.separator + "file.txt");
                 Scanner read = new Scanner(new FileReader(textFile));
-                read.useDelimiter("");
-                StringBuilder textBuilder = new StringBuilder();
+                read.useDelimiter("\\s");
+                Log.d(TAG, "onClick2");
+
+                //StringBuilder textBuilder = new StringBuilder();
                 while(read.hasNext()) {
-                    firstName = read.nextLine();
-                    lastName = read.nextLine();
-                    birthDate = read.nextLine();
+                    mStudent = new Student();
+                    Log.d(TAG, "reader1");
+
+                    firstName = read.next();
+                    lastName = read.next();
+                    birthDate = read.next();
                     mStudent.setLastname(lastName.toString());
                     mStudent.setFirstname(firstName.toString());
                     mStudent.setBirthdate(birthDate.toString());
+                    Log.d(TAG, "reader" + firstName);
+                    Log.d(TAG, "reader" + lastName);
+                    Log.d(TAG, "reader" + birthDate);
+                    mStudent.save();
+                    mStudent.setSchoolClass((SchoolClass) schoolClass.getItemAtPosition(schoolClass.getSelectedItemPosition())); //(SchoolClass) in Klammer zum Casten - Damit java weiß was ich übergebe
                 }
 
             } catch (FileNotFoundException e) {
@@ -162,8 +174,6 @@ public class ImporterFragment extends Fragment {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-            mStudent.setSchoolClass((SchoolClass) schoolClass.getItemAtPosition(schoolClass.getSelectedItemPosition())); //(SchoolClass) in Klammer zum Casten - Damit java weiß was ich übergebe
-            mStudent.save();
 
         }
     };
