@@ -97,39 +97,39 @@ public class ImporterFragment extends Fragment {
 
 //Aktuelles File anzeigen
 
-            BufferedReader reader = null;
-            try {
-                File file = Environment.getExternalStorageDirectory();
-                File textFile = new File(file.getAbsolutePath()+File.separator + "file.txt");
-                reader = new BufferedReader(new FileReader(textFile));
-                StringBuilder textBuilder = new StringBuilder();
-                String line;
-                while((line = reader.readLine()) != null) {
-                    textBuilder.append(line);
-                    textBuilder.append("\n");
-                }
-
-                tv.setText(textBuilder);
-
-            } catch (FileNotFoundException e) {
-                // TODO: handle exception
-                e.printStackTrace();
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            }
-            finally{
-                if(reader != null){
-                    try {
-                        reader.close();
-                    } catch (IOException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
-                }
+        BufferedReader reader = null;
+        try {
+            File file = Environment.getExternalStorageDirectory();
+            File textFile = new File(file.getAbsolutePath()+File.separator + "file.txt");
+            reader = new BufferedReader(new FileReader(textFile));
+            StringBuilder textBuilder = new StringBuilder();
+            String line;
+            while((line = reader.readLine()) != null) {
+                textBuilder.append(line);
+                textBuilder.append("\n");
             }
 
+            tv.setText(textBuilder);
+
+        } catch (FileNotFoundException e) {
+            // TODO: handle exception
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
+        finally{
+            if(reader != null){
+                try {
+                    reader.close();
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+
+    }
 
     // TODO: Rename method, update argument and hook method into UI event
 
@@ -138,35 +138,33 @@ public class ImporterFragment extends Fragment {
         public void onClick(View v) {
             Spinner schoolClass = (Spinner) mRootView.findViewById(R.id.schooClassSpinner);
             Log.d(TAG, "onClick");
-            /*if (mStudent == null) {
-                mStudent = new Student(); //Erstellt neuen Student wenn ich auf speichern klicke
-            } */
             //BufferedReader reader = null;
             try { //Try Block zum Einlesen der File und Lesen der File
                 File file = Environment.getExternalStorageDirectory();
                 File textFile = new File(file.getAbsolutePath()+File.separator + "file.txt");
                 Scanner read = new Scanner(new FileReader(textFile));
-                read.useDelimiter("\\s");
                 Log.d(TAG, "onClick2");
 
-                //StringBuilder textBuilder = new StringBuilder();
-                while(read.hasNext()) {
+                while (read.hasNextLine()) {
+                    read.useDelimiter("\\t");
                     mStudent = new Student();
-                    Log.d(TAG, "reader1");
+                    Log.d(TAG, "line");
 
                     firstName = read.next();
+                    Log.d(TAG, "reader First Name " + firstName);
                     lastName = read.next();
-                    birthDate = read.next();
+                    Log.d(TAG, "reader Last Name " + lastName);
+                    birthDate = read.nextLine();
+                    Log.d(TAG, "reader Birth Date " + birthDate);
+
                     mStudent.setLastname(lastName.toString());
                     mStudent.setFirstname(firstName.toString());
                     mStudent.setBirthdate(birthDate.toString());
-                    Log.d(TAG, "reader" + firstName);
-                    Log.d(TAG, "reader" + lastName);
-                    Log.d(TAG, "reader" + birthDate);
-                    mStudent.save();
                     mStudent.setSchoolClass((SchoolClass) schoolClass.getItemAtPosition(schoolClass.getSelectedItemPosition())); //(SchoolClass) in Klammer zum Casten - Damit java weiß was ich übergebe
-                }
+                    Log.d(TAG, "vormsave");
 
+                    mStudent.save();
+                }
             } catch (FileNotFoundException e) {
                 // TODO: handle exception
                 e.printStackTrace();
