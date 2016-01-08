@@ -10,6 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
 
+
         <meta-data android:name="AA_DB_NAME" android:value="Grading.db" />
         <meta-data android:name="AA_DB_VERSION" android:value="1" />
         <activity
@@ -23,5 +24,6 @@
             </intent-filter>
         </activity>
     </application>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

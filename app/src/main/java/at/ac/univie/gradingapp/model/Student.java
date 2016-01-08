@@ -13,7 +13,7 @@ public class Student extends Person {
     @Column(onDelete = Column.ForeignKeyAction.CASCADE, name = "schoolClass")
     private SchoolClass schoolClass; //1 zu n Beziehung zur SchoolClass
 
-    public Student(String lastname, String firstname, Date birthdate, SchoolClass schoolClass) {
+    public Student(String lastname, String firstname, String birthdate, SchoolClass schoolClass) {
         super(lastname, firstname, birthdate);
         this.schoolClass = schoolClass;
     }
