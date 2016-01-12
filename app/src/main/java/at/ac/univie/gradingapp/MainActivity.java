@@ -2,33 +2,37 @@ package at.ac.univie.gradingapp;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 
+import java.text.Format;
+import java.util.ArrayList;
+import java.util.Map;
+
 import at.ac.univie.gardingapp.R;
+import at.ac.univie.gradingapp.fragment.BulkAddFragment;
 import at.ac.univie.gradingapp.fragment.SchoolClassFragment;
 import at.ac.univie.gradingapp.fragment.SchoolclasslistFragment;
 import at.ac.univie.gradingapp.fragment.StudentClassFragment;
 import at.ac.univie.gradingapp.fragment.StudentListFragment;
 import at.ac.univie.gradingapp.fragment.SubjectListFragment;
-import at.ac.univie.gradingapp.model.Headmaster;
+import at.ac.univie.gradingapp.model.Achievement;
 import at.ac.univie.gradingapp.model.SchoolClass;
 import at.ac.univie.gradingapp.model.Student;
 import at.ac.univie.gradingapp.model.Subject;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,SchoolclasslistFragment.OnFragmentInteractionListener, SubjectListFragment.OnFragmentInteractionListener, StudentListFragment.OnFragmentInteractionListener { //Drawer und Schoolclasslist als Starscreen
+        implements NavigationView.OnNavigationItemSelectedListener,SchoolclasslistFragment.OnFragmentInteractionListener, SubjectListFragment.OnFragmentInteractionListener,
+        StudentListFragment.OnFragmentInteractionListener, BulkAddFragment.OnFragmentInteractionListener { //Drawer und Schoolclasslist als Starscreen
+
+
+
     //1
     ///2
     private static final String TAG = "main activity";
@@ -142,9 +146,40 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBulkAddClicked(SchoolClass selectedSchoolClass) {
         Log.d("MainActivity/BulkAdd", "selected class: " + selectedSchoolClass.getClassname());
-        // TODO: THOMAS: Fragment für BulkAdd öffnen!!
-        // DES GEHT EICH AN SCHEISSDRECK AUN!
-        // FINGER WEG!
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_placeholder, BulkAddFragment.newInstance(selectedSchoolClass)).addToBackStack("").commit();
+        // TODO: BUG beheben: : Manchmal wird keine selectedSchoolClass mitgeliefert! --> Absturz
+    }
+
+    @Override
+    public void onFragmentInteraction_BulkAddSave(ArrayList<Map.Entry<Student, Double>> list) {
+
+        // TODO: Thomas
+        // information für die gewichtung hinzufügen!
+        // die achievementtypes müssen schon existieren, damit man eine achievement hinzufügen kann!!
+
+
+
+        // TODO: IDEE: Eventuell bei Klick auf BulkAdd ein Popup erstellen, bei dem  Leistungsart + Gewichtung ausgewählt werden können?
+
+        //ins hauptfragment zurückwechseln nachdem die noten gespeichert wurden
+        // oder zur klasse zurückwechseln?
+        int count = list.size();
+        Student stud;
+        for(int i = 0; i < count; ++i) {
+
+            stud = (Student)list.get(i).getKey();
+            if(stud != null) {
+
+                Double value = list.get(i).getValue();
+                if(!value.isNaN()) {
+                    double val = value.doubleValue();
+                    stud.addAchievement(new Achievement());
+
+                    //(String name, float weighting, int value, AchievementType type, int maxValue)
+
+                }
+            }
+        }
     }
 
 
